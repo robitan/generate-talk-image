@@ -1,4 +1,5 @@
 import os
+import argparse
 from PIL import Image, ImageDraw, ImageFont
 import pandas as pd
 
@@ -82,8 +83,8 @@ def generate_chat_image(csv_path, output_path="output.png"):
     # 各メッセージを描画
     current_y = 20
     for _, row in df.iterrows():
-        is_right = row['speaker'] == 'Alice'  # Aliceのメッセージを右側に
-        x = 450 if is_right else 50  # 右側か左側かで位置を調整
+        is_right = row['position'] == 'right'  # 位置情報に基づいてメッセージを配置
+        x = 500 if is_right else 50  # 右側か左側かで位置を調整
 
         # メッセージを描画
         bubble_height = create_chat_bubble(
@@ -104,9 +105,14 @@ def generate_chat_image(csv_path, output_path="output.png"):
 
 
 if __name__ == "__main__":
-    csv_path = "sample_conversation.csv"
-    if not os.path.exists(csv_path):
-        print(f"Error: {csv_path} not found")
+    parser = argparse.ArgumentParser(
+        description='Generate chat image from CSV file.')
+    parser.add_argument(
+        'csv_path', help='Path to the CSV file containing conversation data')
+    args = parser.parse_args()
+
+    if not os.path.exists(args.csv_path):
+        print(f"Error: {args.csv_path} not found")
         exit(1)
 
-    generate_chat_image(csv_path)
+    generate_chat_image(args.csv_path)
