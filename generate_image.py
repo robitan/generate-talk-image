@@ -52,7 +52,7 @@ def create_chat_bubble(draw, text, position, is_right=False, max_width=300):
         (x + bubble_width, y + bubble_height),
         (x, y + bubble_height)
     ]
-    bubble_color = "#E9EEF6" if is_right else "#FFFFFF"
+    bubble_color = "#D9EED6" if is_right else "#D9D6EE"
     draw.polygon(bubble_shape, fill=bubble_color)
 
     # テキストを描画
